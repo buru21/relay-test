@@ -27,13 +27,13 @@ int last=90;
 Servo myservo;
 int val;
 int pos=90 ; 
-unsigned long  cntNum=50000;
+unsigned long  cntNum=180000;
 unsigned long cnt;
 int cnt2;
 int buttonState = 0;
 
 int serveState=0;
-int serveMillis=0;
+unsigned long serveMillis=0;
 int i=0;
 
 unsigned long difMillis=0;
@@ -92,10 +92,10 @@ void(* resetFunc)(void)=0;
 void loop() {
 
 
-  if(serveMillis<2000)
+  if(serveMillis<200000)
   {
     serveMillis++;
-    delay(10);
+    delay(1);
   }else
   {
     serveMillis=0;
@@ -110,30 +110,25 @@ void loop() {
   buttonState = digitalRead(buttonPin);
 
   
-  if(gate2state==1)cnt++;
-  if(cnt>cntNum)    //100,000  :  5second
+  if(gate2state==1)
   {
-    cnt2++;
-    cnt=0;
-    if(cnt2>70)
-    {
-      doorClose();
-    }
-    //Serial.println(cnt2);
-    //Serial.println();
-    delay(10);
-  }
-  if(buttonState==HIGH )
-  {
-    
-    difMillis++;
-    delay(10);
-  } else
-  {
-    difMillis=0;
+    delay(1);
+    cnt++;
   }
   
-  if (buttonState == HIGH && difMillis >2) {
+  if(cnt>cntNum)    
+  {
+    cnt=0;
+    doorClose();
+  }
+  
+  if(buttonState==HIGH )
+  {
+    difMillis++;
+    delay(1);
+  }
+  
+  if (buttonState == HIGH && difMillis >10) {
     if(gate2state==1)
     {
       doorClose();
